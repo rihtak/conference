@@ -41,29 +41,8 @@
         margin:0 auto;
 
     }
-    form i.icon.error {
-        color: $assertive;
-    }
-
-    form input + i.icon.error {
-        display: none;
-        margin-left: 8px;
-    }
-
-    form.ng-submitted input.ng-invalid + i.icon.error {
-        display: block;
-    }
-
-    form .has-error {
-        border-left: 5px solid red;
-    }
-
-    form .has-success {
-        border-left: 5px solid darkgreen;
-    }
-
-    form.ng-submitted input.ng-valid + i.icon.error {
-        display: none;
+    input.ng-invalid{
+        border:1px solid red;
     }
 </style>
 <!--<ion-nav-bar class="bar-positive nav-title-slide-ios7">
@@ -77,41 +56,52 @@
 <script id="templates/sign-in.html" type="text/ng-template">
     <ion-view>
         <ion-content>
-            <form novalidate="novalidate" on-valid-submit="doLogin()">
+            <form name="conferenceForm" novalidate data-ng-model="user" ng-submit="signIn()">
             <div class="list" style="margin-top: 4%">
+                <div>
             <label class="item item-input item-stacked-label validated">
                 <span class="input-label">Company Name </span>
-                <input type="text" placeholder="Company Name" class="inputBox" data-ng-model="user.company" required="required">
-                <i class="icon ion-alert-circled error"></i>
+                <input type="text" placeholder="Company Name" class="inputBox" name="company_name" data-ng-model="user.company_name" required="required">
+                <span style="color: red" ng-show="conferenceForm.company_name.$error.required && conferenceForm.company_name.$dirty">Please enter the Company Name</span>
+                <span style="color: red" ng-show="conferenceForm.company_name.$error.required ">**</span>
+
             </label>
+                </div>
 
             <label class="item item-input item-stacked-label validated">
                 <span class="input-label">Email</span>
-                <input type="email" placeholder="Email Id" class="inputBox" data-ng-model="user.email" required="required">
-                <i class="icon ion-alert-circled error"></i>
+                <input type="email" placeholder="Email Id" class="inputBox" name="email_id" data-ng-model="user.email_id" required="required">
+                <span style="color: red" ng-show="conferenceForm.email_id.$error.required && conferenceForm.email_id.$dirty">Please enter an EmailId</span>
+                <span style="color:red" ng-show="conferenceForm.email_id.$error.email_id">not an valid email id</span>
+                <span style="color: red" ng-show="conferenceForm.email_id.$error.required ">**</span>
             </label>
                 <label class="item item-input item-stacked-label validated">
                     <span class="input-label">Phone Number</span>
-                    <input type="text" placeholder="Phone Number" class="inputBox" data-ng-model="user.phone" required="required">
-                    <i class="icon ion-alert-circled error"></i>
+                    <input type="number" placeholder="Phone Number" name="phone_number" class="inputBox" data-ng-model="user.phone_number"  required="required">
+                    <span style="color: red" ng-show="conferenceForm.phone_number.$error.required && conferenceForm.phone_number.$dirty">Please enter phone number</span>
+                    <!--<span style="color: red" ng-show="!conferenceForm.phone.$error.pattern &&  conferenceForm.phone.$dirty">not a valid number</span>-->
+
+                    <span style="color: red" ng-show="conferenceForm.phone_number.$error.required ">**</span>
                 </label>
 
                 <label class="item item-input item-stacked-label validated">
-                    <span class="input-label">About Yours</span>
-                    <input type="text" placeholder="About Yours" class="inputBox" data-ng-model="user.about" required="required">
-                    <i class="icon ion-alert-circled error"></i>
+                    <span class="input-label">Background</span>
+                    <input type="text" placeholder="About Yours" class="inputBox" name="background" data-ng-model="user.background" required="required">
+                    <span style="color: red" ng-show="conferenceForm.background.$error.required">**</span>
+                    <span style="color: red" ng-show="conferenceForm.background.$error.required && conferenceForm.background.$dirty">Please enter an EmailId</span>
                 </label>
 
         </div>
 
             <div class="padding" style="width: 85%;">
-                <button type="Submit" class=" button  button-block button-positive"  style="left:4%;" >
-                    Enter
-                </button>
 
-               <!-- <button type="Submit" class=" button  button-block button-positive" ng-click="signIn(user)" style="left:4%;" >
+
+                <button type="button" class=" button  button-block button-positive" style="left:4%;" >
                 Enter
-            </button>-->
+            </button>
+
+                <pre>form = {{user | json}}</pre>
+
 
             </div>
 </form>

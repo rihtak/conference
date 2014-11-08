@@ -78,15 +78,20 @@ angular.module('ionicApp', ['ionic'])
 
     .controller('SignInCtrl', function($scope, $state) {
 
-        $scope.signIn = function(user) {
-            console.log('Sign-In', user);
-            $state.go('tabs.home');
+        $scope.signIn = function() {
+          alert(0)
+            console.log('Sign-In');
+           $state.go('tabs.home');
         };
 
     })
 
     .controller('HomeTabCtrl', function($scope) {
         console.log('HomeTabCtrl');
+        $http.get('http://seyasoftech.com/conference/Backend/index.php/api/company/list').success(function(response)
+        {
+         console.log(response)
+        })
         $scope.items=[
             {id:1 , companyName:'CompanyName1' , emailId:'email Id 1',phoneNumber:'phonenumber 1' , aboutYour:'details of mine'},
             {id:2 , companyName:'CompanyName2' , emailId:'email Id 2',phoneNumber:'phonenumber 2' , aboutYour:'details of mine'},
