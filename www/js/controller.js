@@ -72,26 +72,39 @@ angular.module('ionicApp', ['ionic'])
             });
 
 
-        $urlRouterProvider.otherwise('/sign-in');
+        $urlRouterProvider.otherwise('/home');
 
     })
 
-    .controller('SignInCtrl', function($scope, $state) {
+    .controller('SignInCtrl', function($scope, $state,$http) {
+        $scope.user={};
 
         $scope.signIn = function() {
-          alert(0)
+        // alert(conferenceForm.$valid)
             console.log('Sign-In');
-           $state.go('tabs.home');
+            alert(0)
+          //$state.go('tabs.home');
+            console.log($scope.user);
+           $http.post('http://seyasoftech.com/conference/Backend/index.php/api/company/create', $scope.user).success(function(response)
+            {
+                alert('post')
+                console.log(response)
+            });
         };
 
     })
 
-    .controller('HomeTabCtrl', function($scope) {
+    .controller('HomeTabCtrl', function($scope , $http) {
+
+        $scope.conferenceFormData={};
         console.log('HomeTabCtrl');
         $http.get('http://seyasoftech.com/conference/Backend/index.php/api/company/list').success(function(response)
         {
          console.log(response)
+        console.log(response.result)
+           $scope.items=response.result;
         })
+
         $scope.items=[
             {id:1 , companyName:'CompanyName1' , emailId:'email Id 1',phoneNumber:'phonenumber 1' , aboutYour:'details of mine'},
             {id:2 , companyName:'CompanyName2' , emailId:'email Id 2',phoneNumber:'phonenumber 2' , aboutYour:'details of mine'},

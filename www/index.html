@@ -68,6 +68,16 @@
             </label>
                 </div>
 
+                <div>
+                    <label class="item item-input item-stacked-label validated">
+                        <span class="input-label">Contact person </span>
+                        <input type="text" placeholder="Company Name" class="inputBox" name="contact_person" data-ng-model="user.contact_person" required="required">
+                        <span style="color: red" ng-show="conferenceForm.contact_person.$error.required && conferenceForm.contact_person.$dirty">Please enter the Contact person Name</span>
+                        <span style="color: red" ng-show="conferenceForm.contact_person.$error.required ">**</span>
+
+                    </label>
+                </div>
+
             <label class="item item-input item-stacked-label validated">
                 <span class="input-label">Email</span>
                 <input type="email" placeholder="Email Id" class="inputBox" name="email_id" data-ng-model="user.email_id" required="required">
@@ -94,9 +104,11 @@
         </div>
 
             <div class="padding" style="width: 85%;">
+                <!--<button type="Submit" class=" button  button-block button-positive"  ng-click="signIn(user)" style="left:4%;" >
+                    Enter
+                </button>-->
 
-
-                <button type="button" class=" button  button-block button-positive" style="left:4%;" >
+               <button type="submit" class=" button  button-block button-positive" style="left:4%;" >
                 Enter
             </button>
 
@@ -161,10 +173,11 @@
                    class="item item-thumbnail-right" style="border: 2px solid #ddd;">
 
 
-                    <h2>{{ item.companyName }}</h2>
-                    <h4>{{ item.emailId }}</h4>
-                    <h4>{{item.phoneNumber}}</h4>
-                    <h4>{{item.aboutYour}}</h4>
+                    <h2>{{ item.company_name }}</h2>
+                    <h4>{{ item.email_id }}</h4>
+                    <h4>{{item.phone_number}}</h4>
+                    <h4>{{item.contact_person}}</h4>
+                    <h4>{{item.background}}</h4>
                 </a>
 
             </div>
