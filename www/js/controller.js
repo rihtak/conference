@@ -14,19 +14,20 @@ angular.module('ionicApp', ['ionic'])
             })
             .state('forgotpassword', {
                 url: '/forgot-password',
-                templateUrl: 'templates/forgot-password.html'
+                templateUrl: 'templates/sign-in.html'
             })
             .state('tabs', {
                 url: '/tab',
                 abstract: true,
-                templateUrl: 'templates/tabs.html'
+                templateUrl: 'templates/tabs.html',
+                controller:'tabCtrl'
             })
             .state('tabs.home', {
-                url: '/home',
+                url: '/memberList',
                 views: {
                     'home-tab': {
-                        templateUrl: 'templates/home.html',
-                        controller: 'HomeTabCtrl'
+                        templateUrl: 'templates/memberList.html',
+                        controller: 'memberListCtrl'
                     }
                 }
             })
@@ -72,44 +73,103 @@ angular.module('ionicApp', ['ionic'])
             });
 
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/sign-in');
 
+    })
+
+    .run(function($ionicPlatform , $rootScope ,$state) {
+
+
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if(window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if(window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+        });
+        $rootScope.$on('$stateChangeStart', function(event, toState ) {
+
+
+
+
+            console.log("check")
+            console.log(toState);
+
+            console.log("check")
+           // console.log(window.localStorage.toState)
+            if(toState.name == "signin")
+            {
+               if(window.localStorage.LoggedIn == "true")
+               {
+              $state.go('tabs.home');
+            }
+            }
+
+
+
+
+        })
     })
 
     .controller('SignInCtrl', function($scope, $state,$http) {
         $scope.user={};
 
-        $scope.signIn = function() {
-        // alert(conferenceForm.$valid)
-            console.log('Sign-In');
-            alert(0)
-          //$state.go('tabs.home');
-            console.log($scope.user);
+        $scope.signIn = function(isValid) {
+
+            //alert(conferenceForm.$valid);
+       if(isValid)
+       {
+           $scope.submitted=false;
+
+           console.log('Sign-In');
+           console.log($scope.user);
            $http.post('http://seyasoftech.com/conference/Backend/index.php/api/company/create', $scope.user).success(function(response)
-            {
-                alert('post')
-                console.log(response)
-            });
+           {
+               alert('post')
+               window.localStorage.LoggedIn = true;
+               console.log(response)
+           });
+           $state.go('tabs.home');
+       }
+            else
+       {
+           $scope.submitted=true;
+           alert('true')
+
+
+       }
         };
 
     })
 
-    .controller('HomeTabCtrl', function($scope , $http) {
+    .controller('memberListCtrl', function($scope , $http) {
 
         $scope.conferenceFormData={};
-        console.log('HomeTabCtrl');
+        console.log('memberListCtrl');
         $http.get('http://seyasoftech.com/conference/Backend/index.php/api/company/list').success(function(response)
         {
          console.log(response)
         console.log(response.result)
            $scope.items=response.result;
+
+
         })
 
-        $scope.items=[
-            {id:1 , companyName:'CompanyName1' , emailId:'email Id 1',phoneNumber:'phonenumber 1' , aboutYour:'details of mine'},
-            {id:2 , companyName:'CompanyName2' , emailId:'email Id 2',phoneNumber:'phonenumber 2' , aboutYour:'details of mine'},
-            {id:3 , companyName:'CompanyName3' , emailId:'email Id 3',phoneNumber:'phonenumber 3' , aboutYour:'details of mine'},
-            {id:4 , companyName:'CompanyName4' , emailId:'email Id 4',phoneNumber:'phonenumber 4' , aboutYour:'details of mine'}
 
-        ]
-;    });
+
+;    })
+    .controller('tabCtrl', function($scope , $http , $state) {
+
+        $scope.signOut = function() {
+
+            window.localStorage.LoggedIn = false;
+            $state.go('signin')
+
+
+        }
+
+        });
+

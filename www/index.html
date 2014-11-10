@@ -44,6 +44,19 @@
     input.ng-invalid{
         border:1px solid red;
     }
+    input.submitted.ng-invalid
+    {
+        border:1px solid #f00 !important;
+    }
+    .submitted
+    {
+        border:1px solid red;
+    }
+    input.ng-invalid.submitted
+    {
+        border:5px solid red;
+    }
+
 </style>
 <!--<ion-nav-bar class="bar-positive nav-title-slide-ios7">
     <ion-nav-back-button class="button-icon ion-arrow-left-c">
@@ -54,91 +67,93 @@
 
 
 <script id="templates/sign-in.html" type="text/ng-template">
+
+    <ion-header-bar class="bar-positive"  >
+        <h1 class="title">SignIn</h1>
+    </ion-header-bar>
     <ion-view>
         <ion-content>
-            <form name="conferenceForm" novalidate data-ng-model="user" ng-submit="signIn()">
-            <div class="list" style="margin-top: 4%">
-                <div>
-            <label class="item item-input item-stacked-label validated">
-                <span class="input-label">Company Name </span>
-                <input type="text" placeholder="Company Name" class="inputBox" name="company_name" data-ng-model="user.company_name" required="required">
-                <span style="color: red" ng-show="conferenceForm.company_name.$error.required && conferenceForm.company_name.$dirty">Please enter the Company Name</span>
-                <span style="color: red" ng-show="conferenceForm.company_name.$error.required ">**</span>
 
-            </label>
+
+           <!-- <h3 style="text-align: center; color:#145fd7;margin-top:5%">SignIn Form</h3>-->
+            <form name="conferenceForm" novalidate data-ng-model="user" ng-submit="signIn(conferenceForm.$valid)" role="form">
+                <div class="list" style="margin-top: 4%">
+                    <div>
+                        <label class="item item-input item-stacked-label validated">
+                            <span class="input-label">Company Name </span>
+                            <input type="text" placeholder="Company Name" class="inputBox" name="company_name" data-ng-model="user.company_name" required="required">
+                            <div   style="color:red" class="error-container" ng-show="conferenceForm.company_name.$dirty && conferenceForm.company_name.$invalid || conferenceForm.company_name.$pristine && submitted ">
+                                <span  ng-show=" conferenceForm.company_name.$dirty && conferenceForm.company_name.$invalid || conferenceForm.company_name.$pristine && submitted">Please enter the Company Name</span>
+                                <span  ng-show="conferenceForm.company_name.$error.required ">**</span>
+
+
+                            </div>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="item item-input item-stacked-label validated">
+                            <span class="input-label">Contact person </span>
+                            <input type="text" placeholder="Company Name" class="inputBox" name="contact_person" data-ng-model="user.contact_person" required="required">
+                            <div   style="color:red" class="error-container" ng-show="conferenceForm.contact_person.$dirty && conferenceForm.contact_person.$invalid || conferenceForm.contact_person.$pristine && submitted ">
+                                <span style="color: red" ng-show="conferenceForm.contact_person.$dirty.required && conferenceForm.contact_person.$invalid || conferenceForm.contact_person.$pristine && submitted">Please enter the Contact person Name</span>
+                                <span style="color: red" ng-show="conferenceForm.contact_person.$error.required ">**</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="item item-input item-stacked-label validated">
+                            <span class="input-label">Email</span>
+                            <input type="email" placeholder="Email Id" class="inputBox" name="email_id" data-ng-model="user.email_id" required="required">
+                            <div   style="color:red" class="error-container" ng-show="conferenceForm.email_id.$dirty && conferenceForm.email_id.$invalid || conferenceForm.email_id.$pristine && submitted ">
+                                <span style="color: red" ng-show="conferenceForm.email_id.$dirty && conferenceForm.email_id.$invalid || conferenceForm.email_id.$pristine && submitted ">Please enter an EmailId</span>
+                                <span style="color:red" ng-show="conferenceForm.email_id.$error.email_id">not an valid email id</span>
+                                <span style="color: red" ng-show="conferenceForm.email_id.$error.required ">**</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="item item-input item-stacked-label validated">
+                            <span class="input-label">Phone Number</span>
+                            <input type="number" placeholder="Phone Number" name="phone_number" class="inputBox" data-ng-model="user.phone_number"  required="required">
+                            <div   style="color:red" class="error-container" ng-show="conferenceForm.phone_number.$dirty && conferenceForm.phone_number.$invalid || conferenceForm.phone_number.$pristine && submitted ">
+                                <span style="color: red" ng-show="conferenceForm.phone_number.$dirty && conferenceForm.phone_number.$invalid || conferenceForm.phone_number.$pristine && submitted ">Please enter phone number</span>
+                                <!--<span style="color: red" ng-show="!conferenceForm.phone.$error.pattern &&  conferenceForm.phone.$dirty">not a valid number</span>-->
+
+                                <span style="color: red" ng-show="conferenceForm.phone_number.$error.required ">**</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="item item-input item-stacked-label validated">
+                            <span class="input-label">Background</span>
+                            <input type="text" placeholder="About Yours" class="inputBox" name="background" data-ng-model="user.background" required="required">
+                            <div   style="color:red" class="error-container" ng-show="conferenceForm.background.$dirty && conferenceForm.background.$invalid || conferenceForm.background.$pristine && submitted ">
+                               <!-- <span style="color: red" ng-show="conferenceForm.background.$error.required || conferenceForm.background.$pristine && submitted ">**</span>-->
+                                <span style="color: red" ng-show="conferenceForm.background.$error.required && conferenceForm.background.$dirty">Please enter an EmailId</span>
+                        </label>
+                    </div>
+
                 </div>
 
-                <div>
-                    <label class="item item-input item-stacked-label validated">
-                        <span class="input-label">Contact person </span>
-                        <input type="text" placeholder="Company Name" class="inputBox" name="contact_person" data-ng-model="user.contact_person" required="required">
-                        <span style="color: red" ng-show="conferenceForm.contact_person.$error.required && conferenceForm.contact_person.$dirty">Please enter the Contact person Name</span>
-                        <span style="color: red" ng-show="conferenceForm.contact_person.$error.required ">**</span>
+                <div class="padding" style="width: 85%;">
+                    <!--<button type="Submit" class=" button  button-block button-positive"  ng-click="signIn(user)" style="left:4%;" >
+                        Enter
+                    </button>-->
 
-                    </label>
+                    <button type="submit" class=" button  button-block button-positive"  ng-disable="conferenceForm.$invalid"  style="left:4%;" >
+                        Enter
+                    </button>
+
+                   <!-- <pre>form = {{user | json}}</pre>-->
+
+
                 </div>
-
-            <label class="item item-input item-stacked-label validated">
-                <span class="input-label">Email</span>
-                <input type="email" placeholder="Email Id" class="inputBox" name="email_id" data-ng-model="user.email_id" required="required">
-                <span style="color: red" ng-show="conferenceForm.email_id.$error.required && conferenceForm.email_id.$dirty">Please enter an EmailId</span>
-                <span style="color:red" ng-show="conferenceForm.email_id.$error.email_id">not an valid email id</span>
-                <span style="color: red" ng-show="conferenceForm.email_id.$error.required ">**</span>
-            </label>
-                <label class="item item-input item-stacked-label validated">
-                    <span class="input-label">Phone Number</span>
-                    <input type="number" placeholder="Phone Number" name="phone_number" class="inputBox" data-ng-model="user.phone_number"  required="required">
-                    <span style="color: red" ng-show="conferenceForm.phone_number.$error.required && conferenceForm.phone_number.$dirty">Please enter phone number</span>
-                    <!--<span style="color: red" ng-show="!conferenceForm.phone.$error.pattern &&  conferenceForm.phone.$dirty">not a valid number</span>-->
-
-                    <span style="color: red" ng-show="conferenceForm.phone_number.$error.required ">**</span>
-                </label>
-
-                <label class="item item-input item-stacked-label validated">
-                    <span class="input-label">Background</span>
-                    <input type="text" placeholder="About Yours" class="inputBox" name="background" data-ng-model="user.background" required="required">
-                    <span style="color: red" ng-show="conferenceForm.background.$error.required">**</span>
-                    <span style="color: red" ng-show="conferenceForm.background.$error.required && conferenceForm.background.$dirty">Please enter an EmailId</span>
-                </label>
-
-        </div>
-
-            <div class="padding" style="width: 85%;">
-                <!--<button type="Submit" class=" button  button-block button-positive"  ng-click="signIn(user)" style="left:4%;" >
-                    Enter
-                </button>-->
-
-               <button type="submit" class=" button  button-block button-positive" style="left:4%;" >
-                Enter
-            </button>
-
-                <pre>form = {{user | json}}</pre>
-
-
-            </div>
-</form>
+            </form>
         </ion-content>
     </ion-view>
 </script>
 
-<script id="templates/forgot-password.html" type="text/ng-template">
-
-    <ion-view title="Forgot Password">
-        <ion-content padding="true">
-            <p>
-                Yeah this is just a demo showing how views can be shown without tabs, then you can navigate
-                to views within tabs. Additionally, only one set of tabs needs to be written for all of the different views that should go inside the tabs. (Compared to written the same tab links in the footer of every view that's in a tab.)
-            </p>
-            <p>
-                There's no username/password, just click
-                the Sign-In button back a the sign-in view.
-            </p>
-            <p>
-                Return to <a href="#/sign-in">Sign-In</a>.
-            </p>
-        </ion-content>
-    </ion-view>
-</script>
 
 <script id="templates/tabs.html" type="text/ng-template">
     <ion-view>
@@ -148,18 +163,18 @@
                 <ion-nav-view name="home-tab"></ion-nav-view>
             </ion-tab>
 
-           <!-- <ion-tab title="About" icon="ion-ios7-information" href="#/tab/about">
-                <ion-nav-view name="about-tab"></ion-nav-view>
-            </ion-tab>-->
+            <!-- <ion-tab title="About" icon="ion-ios7-information" href="#/tab/about">
+                 <ion-nav-view name="about-tab"></ion-nav-view>
+             </ion-tab>-->
 
-            <ion-tab title="Sign-Out" icon="ion-log-out" href="#/sign-in">
+            <ion-tab title="Sign-Out" icon="ion-log-out" ng-click="signOut()">
             </ion-tab>
 
         </ion-tabs>
     </ion-view>
 </script>
 
-<script id="templates/home.html" type="text/ng-template">
+<script id="templates/memberList.html" type="text/ng-template">
     <ion-header-bar class="bar-positive">
         <h1 class="title">List</h1>
     </ion-header-bar>
@@ -180,56 +195,19 @@
                     <h4>{{item.background}}</h4>
                 </a>
 
+
             </div>
+            <!--<div>
+                <p class="text-center">
+                    <a href="#/forgot-password">SignOut</a>
+                </p>
+            </div>-->
+
         </ion-content>
     </ion-view>
 </script>
 
-<script id="templates/facts.html" type="text/ng-template">
-    <ion-view title="Facts">
-        <ion-content padding="true">
-            <p>Banging your head against a wall uses 150 calories an hour.</p>
-            <p>Dogs have four toes on their hind feet, and five on their front feet.</p>
-            <p>The ant can lift 50 times its own weight, can pull 30 times its own weight and always falls over on its right side when intoxicated.</p>
-            <p>A cockroach will live nine days without it's head, before it starves to death.</p>
-            <p>Polar bears are left handed.</p>
-            <p>
-                <a class="button icon ion-home" href="#/tab/home"> Home</a>
-                <a class="button icon icon-right ion-chevron-right" href="#/tab/facts2">More Facts</a>
-            </p>
-        </ion-content>
-    </ion-view>
-</script>
 
-<script id="templates/facts2.html" type="text/ng-template">
-    <ion-view title="Also Factual">
-        <ion-content padding="true">
-            <p>111,111,111 x 111,111,111 = 12,345,678,987,654,321</p>
-            <p>1 in every 4 Americans has appeared on T.V.</p>
-            <p>11% of the world is left-handed.</p>
-            <p>1 in 8 Americans has worked at a McDonalds restaurant.</p>
-            <p>$283,200 is the absolute highest amount of money you can win on Jeopardy.</p>
-            <p>101 Dalmatians, Peter Pan, Lady and the Tramp, and Mulan are the only Disney cartoons where both parents are present and don't die throughout the movie.</p>
-            <p>
-                <a class="button icon ion-home" href="#/tab/home"> Home</a>
-                <a class="button icon ion-chevron-left" href="#/tab/facts"> Scientific Facts</a>
-            </p>
-        </ion-content>
-    </ion-view>
-</script>
-
-<!--<script id="templates/about.html" type="text/ng-template">
-    <ion-view title="About">
-        <ion-content padding="true">
-            <h3>Create hybrid mobile apps with the web technologies you love.</h3>
-            <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
-            <p>Built with Sass and optimized for AngularJS.</p>
-            <p>
-                <a class="button icon icon-right ion-chevron-right" href="#/tab/navstack">Tabs Nav Stack</a>
-            </p>
-        </ion-content>
-    </ion-view>
-</script>-->
 
 <script id="templates/nav-stack.html" type="text/ng-template">
     <ion-view title="Tab Nav Stack">
